@@ -1,0 +1,1 @@
+export const Category = ['Σταθερός Η/Υ', 'Laptop' , 'Κινητό', 'Tablet', 'Εκτυπωτής', 'Game Console'];
