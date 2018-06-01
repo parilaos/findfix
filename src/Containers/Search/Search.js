@@ -29,13 +29,34 @@ brandHandler = (event) => {
 
 modelHandler = (event) => {
   this.setState({model : event.target.value});
+  console.log(this.state.model);
   sessionStorage.setItem('model',event.target.value);
   } 
+
+
+  modelButtonHandler = () => {
+    this.setState({model : this.modelValue.value});
+    sessionStorage.setItem('model', this.modelValue.value);
+
+    } 
+  
+componentDidUpdate() {
+  if (document.getElementById('issues')) {
+    document.getElementById('issues').value = '';}
+}
 
 issueHandler = (event) => {
   this.setState({issue : event.target.value});
   sessionStorage.setItem('issue',event.target.value);
+
   } 
+
+  issueButtonHandler = () => {
+    this.setState({issue : this.issueValue.value});
+    sessionStorage.setItem('issue',this.issueValue.value);
+
+    } 
+  
 
 searchHandler = () => {
   const data = sessionStorage;
@@ -82,9 +103,9 @@ else if (this.state.brand === '') {
       <div className="col-lg-8 offset-lg-2 col-md-8 offset-md-2 col-s-12 col-xs-12">
       <p className="lead">Ποιό μοντέλο έχεις;</p>                
       <div className="input-group mb-3">
-        <input type="text" className="form-control" placeholder="π.χ 6s plus"  />
+        <input type="text" className="form-control" placeholder="π.χ 6s plus" ref= {el => this.modelValue = el}  />
         <div className="input-group-append">
-          <button className="btn btn-outline-secondary" type="button" onClick={this.modelHandler}>Επόμενο</button>
+          <button className="btn btn-outline-secondary" type="button" onClick={ (e) =>{ this.modelButtonHandler();}}>Επόμενο</button>
         </div>
       </div>
       </div>)}
@@ -96,13 +117,15 @@ else if (this.state.brand === '') {
       <p className="lead">Επέλεξε βλάβη</p>                
           {issueSearch.map(issueName => {return (<InputButton key={issueName} choice={this.issueHandler} value={issueName}/>);})}
       </div>) }
-      else {element = (
+      else{
+        
+        element = (
         <div className="col-lg-8 offset-lg-2 col-md-8 offset-md-2 col-s-12 col-xs-12">
         <p className="lead">Ποιό είναι το πρόβλημα;</p>                
         <div className="input-group mb-3">
-          <input type="text" className="form-control" placeholder="π.χ σπασμένη οθόνη" value={this.state.issue} />
+          <input type="text" className="form-control" placeholder="π.χ. σπασμένη οθόνη" id="issues" ref= {el => this.issueValue = el} />
           <div className="input-group-append">
-            <button className="btn btn-outline-secondary" type="button" onClick={this.issueHandler}>Επόμενο</button>
+            <button className="btn btn-outline-secondary" type="button" onClick={ (e) =>{ this.issueButtonHandler();}}>Επόμενο</button>
           </div>
         </div>
         </div>)}
@@ -116,6 +139,10 @@ else if (this.state.brand === '') {
 return(
     
         <div className="starter-template">
+        {this.state.category}
+        {this.state.brand}
+        {this.state.model}
+        {this.state.issue}
                 { element }
         </div>
 
