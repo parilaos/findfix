@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from '../../axios-api';
 
 import InputButton from '../../Componets/UI/input/InputButton';
 import History from '../../Componets/History/History';
@@ -59,28 +60,50 @@ issueHandler = (event) => {
   
 
 searchHandler = () => {
-  const data = sessionStorage;
+  const data = {locality : sessionStorage.getItem('locality')};
+  axios.post('/shop', data)
+  .then(response => {
+    sessionStorage.setItem('shops', response);
+    this.props.history.replace('/shops');
+  })
+  .catch( (error) => {
+    console.log(error);
+  });
   console.log(data);
 }
 
 render() {
 let element =null;
+let history = null;
 if ( this.state.category === '') {
+  history = (<div className="row">
+              <History name="Περιοχή" value={sessionStorage.getItem('locality')} />
+            </div>);
     element = (
         <div className="col-lg-8 offset-lg-2 col-md-8 offset-md-2 col-s-12 col-xs-12">
             <p className="lead">Τι θέλεις να επισκευάσεις;</p>                
                 {Category.map( Category => {return (<InputButton key={Category} choice={this.categoryHandler} value={Category}/>);})}
-        </div>)
+        </div>);
 } 
 else if (this.state.brand === '') {
     const categoryName = this.state.category;
     let brandSearch = Brands[categoryName];
-    if (brandSearch) { element = (
+    if (brandSearch) { 
+      history = (<div className="row">
+              <History name="Περιοχή" value={sessionStorage.getItem('locality')} />
+              <History name="Κατηγορία" value={this.state.category}/>
+              </div>);
+      element = (
       <div className="col-lg-8 offset-lg-2 col-md-8 offset-md-2 col-s-12 col-xs-12">
       <p className="lead">Επέλεξε Μάρκα</p>                
           {brandSearch.map( brandlName => {return (<InputButton key={brandlName} choice={this.brandHandler} value={brandlName}/>);})}
       </div>) }
-    else  {  element = (
+    else  { 
+      history = (<div className="row">
+              <History name="Περιοχή" value={sessionStorage.getItem('locality')} />
+              <History name="Κατηγορία" value={this.state.category}/>
+              </div>);
+     element = (
       <div className="col-lg-8 offset-lg-2 col-md-8 offset-md-2 col-s-12 col-xs-12">
       <p className="lead">Τι μάρκα είναι;</p>                
       <div className="input-group mb-3">
@@ -94,12 +117,23 @@ else if (this.state.brand === '') {
   let brandName = this.state.brand;
   let modelSearch =Models[brandName];
   if (modelSearch) {
-  element = (
+    history = (<div className="row">
+    <History name="Περιοχή"  value={sessionStorage.getItem('locality')} />
+    <History name="Κατηγορία" value={this.state.category}/>
+    <History name="Μάρκα" value={this.state.brand} />
+    </div>);
+    element = (
     <div className="col-lg-8 offset-lg-2 col-md-8 offset-md-2 col-s-12 col-xs-12">
     <p className="lead">Επέλεξε Μοντέλο</p>                
         {modelSearch.map( modelName => {return (<InputButton key={modelName} choice={this.modelHandler} value={modelName}/>);})}
     </div>) }
-    else {element = (
+    else {
+      history = (<div className="row">
+      <History name="Περιοχή" value={sessionStorage.getItem('locality')} />
+      <History name="Κατηγορία" value={this.state.category}/>
+      <History name="Μάρκα" value={this.state.brand} />
+      </div>);
+      element = (
       <div className="col-lg-8 offset-lg-2 col-md-8 offset-md-2 col-s-12 col-xs-12">
       <p className="lead">Ποιό μοντέλο έχεις;</p>                
       <div className="input-group mb-3">
@@ -112,13 +146,24 @@ else if (this.state.brand === '') {
 } else if (this.state.issue === '') {
   let issueSearch=Issues[this.state.category];
   if (issueSearch) {
+    history = (<div className="row">
+    <History name="Περιοχή" value={sessionStorage.getItem('locality')} />
+    <History name="Κατηγορία" value={this.state.category}/>
+    <History name="Μάρκα" value={this.state.brand} />
+    <History name="Μοντέλο" value={this.state.model} />
+    </div>);
     element = (
       <div className="col-lg-8 offset-lg-2 col-md-8 offset-md-2 col-s-12 col-xs-12">
       <p className="lead">Επέλεξε βλάβη</p>                
           {issueSearch.map(issueName => {return (<InputButton key={issueName} choice={this.issueHandler} value={issueName}/>);})}
       </div>) }
       else{
-        
+        history = (<div className="row">
+        <History name="Περιοχή" value={sessionStorage.getItem('locality')} />
+        <History name="Κατηγορία" value={this.state.category}/>
+        <History name="Μάρκα" value={this.state.brand} />
+        <History name="Μοντέλο" value={this.state.model} />
+        </div>);
         element = (
         <div className="col-lg-8 offset-lg-2 col-md-8 offset-md-2 col-s-12 col-xs-12">
         <p className="lead">Ποιό είναι το πρόβλημα;</p>                
@@ -129,21 +174,27 @@ else if (this.state.brand === '') {
           </div>
         </div>
         </div>)}
-} else { element =(
+} else { 
+  history = (<div className="row">
+          <History name="Περιοχή" value={sessionStorage.getItem('locality')} />
+          <History name="Κατηγορία" value={this.state.category}/>
+          <History name="Μάρκα" value={this.state.brand} />
+          <History name="Μοντέλο" value={this.state.model} />
+          <History name="Πρόβλημα" value={this.state.issue} />
+          </div>);
+  element =(
   <div className="col-lg-8 offset-lg-2 col-md-8 offset-md-2 col-s-12 col-xs-12">
     <input type="button" className="btn btn-outline-info btn-block" onClick={this.searchHandler} value="Αναζήτηση" />  
   </div>
 )}
 
-
 return(
     
         <div className="starter-template">
-        {this.state.category}
-        {this.state.brand}
-        {this.state.model}
-        {this.state.issue}
-                { element }
+          <div className="container">
+            {history}
+          </div>
+            { element }
         </div>
 
 );
