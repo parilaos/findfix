@@ -61,9 +61,9 @@ issueHandler = (event) => {
 
 searchHandler = () => {
   const data = {locality : sessionStorage.getItem('locality')};
-  axios.post('/shop', data)
+  axios.get('/shop')
   .then(response => {
-    sessionStorage.setItem('shops', response);
+    sessionStorage.setItem('shops', JSON.stringify(response.data));
     this.props.history.replace('/shops');
   })
   .catch( (error) => {

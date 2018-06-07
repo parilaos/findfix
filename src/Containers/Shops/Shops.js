@@ -2,20 +2,19 @@ import React, { Component } from 'react'
 import Shop from '../../Componets/Shop/Shop';
 
 class Shops extends Component {
-    state = {
-        shops : sessionStorage.getItem('shops')
-    }
-
+  
     render () {
-        
-    //     let element = null;
-    //     let data = Array.from(this.state.shops);
-    //     console.log(data);
-    //     element =(data.map( shops => {return ( <Shop key={shops} value={data}/>)})
-    // );
+        const data = sessionStorage.getItem('shops');
+        console.log(data);
+        Object.values(data).map((el,key) => {console.log(el + ' / ' + key);})
         return (
-           <div>sasdasdasdasdasdasdas</div>
-                );
+            <div className="loop-container">
+            {
+                // data.map((key, el) => 
+                //         { Object.entries(el).map(([key, value]) => {return(<div key={key}>{console.log(value)}</div>)})} )
+            }
+        </div>
+        )
     }
 }
 
