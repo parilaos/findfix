@@ -8,13 +8,14 @@ class Shops extends Component {
 
     render () {
         
-        let elemnt = this.state.shops.map(shops => {
-            return <Shop key={shops} />
-        });
-
+    //     let element = null;
+    //     let data = Array.from(this.state.shops);
+    //     console.log(data);
+    //     element =(data.map( shops => {return ( <Shop key={shops} value={data}/>)})
+    // );
         return (
-            {elemnt}
-        );
+           <div>sasdasdasdasdasdasdas</div>
+                );
     }
 }
 
