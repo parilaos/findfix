@@ -4,15 +4,14 @@ import Shop from '../../Componets/Shop/Shop';
 class Shops extends Component {
   
     render () {
-        const data = sessionStorage.getItem('shops');
+        let element = null
+        const data = JSON.parse(sessionStorage.getItem('shops'));
         console.log(data);
-        Object.values(data).map((el,key) => {console.log(el + ' / ' + key);})
+        element = (<div>{Object.values(data).map((el,i) => {return (<Shop key={i} value={el.locality} />)})}</div>);
+        // Object.values(data).map((el, index) => {console.log(el.locality + '\  '+ index)})
         return (
             <div className="loop-container">
-            {
-                // data.map((key, el) => 
-                //         { Object.entries(el).map(([key, value]) => {return(<div key={key}>{console.log(value)}</div>)})} )
-            }
+            {element}
         </div>
         )
     }
