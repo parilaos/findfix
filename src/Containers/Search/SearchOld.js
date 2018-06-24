@@ -10,10 +10,9 @@ import { Issues } from '../../Config/Issues';
 
 class Search extends Component {
   state= {
-    locality : sessionStorage.getItem('locality'),
-    category : sessionStorage.getItem('category') ,
-    brand : sessionStorage.getItem('brand') ,
-    issue: sessionStorage.getItem('issue') ,
+    category : '' ,
+    brand : '' ,
+    issue: '' ,
     errorStatus : false
 }
 
@@ -47,20 +46,6 @@ issueHandler = (event) => {
     } 
   
 
- 
-  deleteHandler = id => () => {
-    const searchData = {...this.state}; //copy the state
-    const searchKeys = Object.keys(searchData); //get object keys
-    const searchToDelete = searchKeys[id]; //find the key we ar searching for from the id
-
-    if (searchToDelete === 'locality') {
-      this.props.history.replace('/');
-    }
-    searchData[searchToDelete]= null; //set to null
-
-    this.setState(searchData); //setState to delete (rerender)
-  }
-
 searchHandler = () => {
   const data = sessionStorage.getItem('locality')
   axios.get('/shop/'+data)
@@ -78,36 +63,36 @@ searchHandler = () => {
 render() {
 let element =null;
 let history = null;
-
-history = Object.values(this.state).map((data,id) => {
-  if(data) { 
-    return (
-    
-      <div key={id} className="col-xs-3 col-md-3 col-s-3 col-l-3 col-xl-3">
-        <History  value={data} delete={this.deleteHandler(id)}/>
-      </div>
-    )}
-})
-
-if ( this.state.category === null) {
+if ( this.state.category === '') {
+  history = (<div className="row">
+              <History name="Περιοχή" value={sessionStorage.getItem('locality')} />
+            </div>);
     element = (
-        <div>
+        <div className="col-lg-8 offset-lg-2 col-md-8 offset-md-2 col-s-12 col-xs-12">
             <p className="lead">Τι θέλεις να επισκευάσεις;</p>                
                 {Category.map( Category => {return (<InputButton key={Category} choice={this.categoryHandler} value={Category}/>);})}
         </div>);
 } 
-else if (this.state.brand === null) {
+else if (this.state.brand === '') {
     const categoryName = this.state.category;
     let brandSearch = Brands[categoryName];
     if (brandSearch) { 
+      history = (<div className="row">
+              <History name="Περιοχή" value={sessionStorage.getItem('locality')} />
+              <History name="Κατηγορία" value={this.state.category}/>
+              </div>);
       element = (
-      <div>
+      <div className="col-lg-8 offset-lg-2 col-md-8 offset-md-2 col-s-12 col-xs-12">
       <p className="lead">Επέλεξε Μάρκα</p>                
           {brandSearch.map( brandlName => {return (<InputButton key={brandlName} choice={this.brandHandler} value={brandlName}/>);})}
       </div>) }
     else  { 
+      history = (<div className="row">
+              <History name="Περιοχή" value={sessionStorage.getItem('locality')} />
+              <History name="Κατηγορία" value={this.state.category}/>
+              </div>);
      element = (
-      <div>
+      <div className="col-lg-8 offset-lg-2 col-md-8 offset-md-2 col-s-12 col-xs-12">
       <p className="lead">Τι μάρκα είναι;</p>                
       <div className="input-group mb-3">
         <input type="text" className="form-control" placeholder="π.χ Apple..." value=""/>
@@ -116,17 +101,28 @@ else if (this.state.brand === null) {
         </div>
       </div>
       </div>) }
-} else if (this.state.issue === null) {
+} else if (this.state.issue === '') {
   let issueSearch=Issues[this.state.category];
   if (issueSearch) {
+    history = (<div className="row">
+    <History name="Περιοχή" value={sessionStorage.getItem('locality')} />
+    <History name="Κατηγορία" value={this.state.category}/>
+    <History name="Μάρκα" value={this.state.brand} />
+
+    </div>);
     element = (
-      <div>
+      <div className="col-lg-8 offset-lg-2 col-md-8 offset-md-2 col-s-12 col-xs-12">
       <p className="lead">Επέλεξε βλάβη</p>                
           {issueSearch.map(issueName => {return (<InputButton key={issueName} choice={this.issueHandler} value={issueName}/>);})}
       </div>) }
       else{
+        history = (<div className="row">
+        <History name="Περιοχή" value={sessionStorage.getItem('locality')} />
+        <History name="Κατηγορία" value={this.state.category}/>
+        <History name="Μάρκα" value={this.state.brand} />
+        </div>);
         element = (
-        <div>
+        <div className="col-lg-8 offset-lg-2 col-md-8 offset-md-2 col-s-12 col-xs-12">
         <p className="lead">Ποιό είναι το πρόβλημα;</p>                
         <div className="input-group mb-3">
           <input type="text" className="form-control" placeholder="π.χ. σπασμένη οθόνη" id="issues" ref= {el => this.issueValue = el} />
@@ -136,9 +132,14 @@ else if (this.state.brand === null) {
         </div>
         </div>)}
 } else { 
-
+  history = (<div className="row">
+          <History name="Περιοχή" value={sessionStorage.getItem('locality')} />
+          <History name="Κατηγορία" value={this.state.category}/>
+          <History name="Μάρκα" value={this.state.brand} />
+          <History name="Πρόβλημα" value={this.state.issue} />
+          </div>);
   element =(
-  <div>
+  <div className="col-lg-8 offset-lg-2 col-md-8 offset-md-2 col-s-12 col-xs-12">
     <input type="button" className="btn btn-outline-info btn-block" onClick={this.searchHandler} value="Αναζήτηση" />  
   </div>
 )}
@@ -148,47 +149,13 @@ let error = null;
        error = <div className="alert alert-warning" role="alert" >Ουπς! κάτι δεν πηγε καλά. </div>
     }
 
-
-
 return(
     
         <div className="starter-template">
           <div className="container">
             <div className="card">
               <div className="card-body">
-                {/*************stepper *************/}
-                <div className="d-none d-sm-block">
-                  <div class="row bs-wizard" >
-                  
-                    <div class="col-xs-3 col-md-3 col-s-3 col-l-3 col-xl-3 bs-wizard-step complete">
-                      <div class="text-center bs-wizard-stepnum">Περιοχή</div>
-                      <div class="progress"><div class="progress-bar"></div></div>
-                      <a href="#" class="bs-wizard-dot"></a>
-                    </div>
-                    
-                    <div class="col-xs-3 col-md-3 col-s-3 col-l-3 col-xl-3 bs-wizard-step complete">
-                      <div class="text-center bs-wizard-stepnum">Είδος</div>
-                      <div class="progress"><div class="progress-bar"></div></div>
-                      <div class="bs-wizard-dot"></div>
-                    </div>
-                    
-                    <div class="col-xs-3 col-md-3 col-s-3 col-l-3 col-xl-3 bs-wizard-step active">
-                      <div class="text-center bs-wizard-stepnum">Μάρκα</div>
-                      <div class="progress"><div class="progress-bar"></div></div>
-                      <div className="bs-wizard-dot"></div>
-                    </div>
-                    
-                    <div className="col-xs-3 col-md-3 col-s-3 col-l-3 col-xl-3 bs-wizard-step disabled">
-                      <div className="text-center bs-wizard-stepnum">Step 4</div>
-                      <div className="progress"><div class="progress-bar"></div></div>
-                      <div className="bs-wizard-dot"></div>
-                    </div>
-                  </div>
-                </div>
-        
-                <div className="row">
-                  {history}
-                </div>
+                 {history}
               </div>
             </div>
             <div className="card">
@@ -196,7 +163,7 @@ return(
                 { element }
               </div>
             </div>
-                { error }
+            { error }
           </div>
         </div>
 );

@@ -4,7 +4,7 @@ import { Cookies } from 'react-cookie';
 
 const cookies = new Cookies();
 
-sessionStorage.clear();
+
 
 class Locality extends Component {
     state= {
@@ -12,6 +12,8 @@ class Locality extends Component {
        }
 
     localityHandler = (event) => {
+        
+        sessionStorage.clear();
         const google = window.google;
         let place;
         let componentForm = {
