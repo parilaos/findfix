@@ -63,7 +63,7 @@ issueHandler = (event) => {
 
 searchHandler = () => {
   const data = sessionStorage.getItem('locality')
-  axios.get('/shop/'+data)
+  axios.get('/shop/locality/'+data)
   .then(response => {
     sessionStorage.setItem('shops', JSON.stringify(response.data));
     this.props.history.replace('/shops');
@@ -158,29 +158,29 @@ return(
               <div className="card-body">
                 {/*************stepper *************/}
                 <div className="d-none d-sm-block">
-                  <div class="row bs-wizard" >
+                  <div className="row bs-wizard" >
                   
-                    <div class="col-xs-3 col-md-3 col-s-3 col-l-3 col-xl-3 bs-wizard-step complete">
-                      <div class="text-center bs-wizard-stepnum">Περιοχή</div>
-                      <div class="progress"><div class="progress-bar"></div></div>
-                      <a href="#" class="bs-wizard-dot"></a>
+                    <div className="col-xs-3 col-md-3 col-s-3 col-l-3 col-xl-3 bs-wizard-step complete">
+                      <div className="text-center bs-wizard-stepnum">Περιοχή</div>
+                      <div className="progress"><div className="progress-bar"></div></div>
+                      <div className="bs-wizard-dot"></div>
                     </div>
                     
-                    <div class="col-xs-3 col-md-3 col-s-3 col-l-3 col-xl-3 bs-wizard-step complete">
-                      <div class="text-center bs-wizard-stepnum">Είδος</div>
-                      <div class="progress"><div class="progress-bar"></div></div>
-                      <div class="bs-wizard-dot"></div>
+                    <div className="col-xs-3 col-md-3 col-s-3 col-l-3 col-xl-3 bs-wizard-step complete">
+                      <div className="text-center bs-wizard-stepnum">Είδος</div>
+                      <div className="progress"><div className="progress-bar"></div></div>
+                      <div className="bs-wizard-dot"></div>
                     </div>
                     
-                    <div class="col-xs-3 col-md-3 col-s-3 col-l-3 col-xl-3 bs-wizard-step active">
-                      <div class="text-center bs-wizard-stepnum">Μάρκα</div>
-                      <div class="progress"><div class="progress-bar"></div></div>
+                    <div className="col-xs-3 col-md-3 col-s-3 col-l-3 col-xl-3 bs-wizard-step active">
+                      <div className="text-center bs-wizard-stepnum">Μάρκα</div>
+                      <div className="progress"><div className="progress-bar"></div></div>
                       <div className="bs-wizard-dot"></div>
                     </div>
                     
                     <div className="col-xs-3 col-md-3 col-s-3 col-l-3 col-xl-3 bs-wizard-step disabled">
                       <div className="text-center bs-wizard-stepnum">Step 4</div>
-                      <div className="progress"><div class="progress-bar"></div></div>
+                      <div className="progress"><div className="progress-bar"></div></div>
                       <div className="bs-wizard-dot"></div>
                     </div>
                   </div>
