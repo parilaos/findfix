@@ -97,7 +97,7 @@ issueHandler = (event) => {
 searchHandler = () => {
   const data = sessionStorage.getItem('locality');
   this.setState({loader : true});
-  axios.get('/shop/locality/'+data)
+  axios.get('/search/locality/'+data)
   .then(response => {
     
     sessionStorage.setItem('shops', JSON.stringify(response.data));
