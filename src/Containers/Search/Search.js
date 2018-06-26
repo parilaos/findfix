@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import axios from '../../axios-api';
 
+import Loader from '../../Componets/UI/Loader/Loader';
 import InputButton from '../../Componets/UI/input/InputButton';
 import History from '../../Componets/History/History';
+import Stepper from '../../Componets/UI/Stepper/Stepper';
 import { Category } from '../../Config/Category';
 import { Brands } from '../../Config/Brands';
 import { Issues } from '../../Config/Issues';
@@ -10,22 +12,38 @@ import { Issues } from '../../Config/Issues';
 
 class Search extends Component {
   state= {
-    locality : sessionStorage.getItem('locality'),
-    category : sessionStorage.getItem('category') ,
-    brand : sessionStorage.getItem('brand') ,
-    issue: sessionStorage.getItem('issue') ,
-    errorStatus : false
+      searchItems : {
+      locality : sessionStorage.getItem('locality'),
+      category : sessionStorage.getItem('category') ,
+      brand : sessionStorage.getItem('brand') ,
+      issue: sessionStorage.getItem('issue') ,
+      },
+    errorStatus : false,
+    loader : false,
+    stepper :[{text : 'Περιοχή', stepperClass : 'complete'},
+              {text : 'Είδος', stepperClass : 'active'},
+              {text : 'Μάρκα', stepperClass : 'disabled'},
+              {text : 'Πρόβλημα', stepperClass : 'disabled'}],
 }
 
 
 
 categoryHandler = (event) => {
-this.setState({category : event.target.value});
+  
+const stepperClassChange = [...this.state.stepper];
+stepperClassChange[1].stepperClass = 'complete';
+stepperClassChange[2].stepperClass = 'active';
+this.setState({ searchItems : {...this.state.searchItems, category : event.target.value}});
+
 sessionStorage.setItem('category',event.target.value);
 } 
 
 brandHandler = (event) => {
-  this.setState({brand : event.target.value});
+
+  const stepperClassChange = [...this.state.stepper];
+  stepperClassChange[2].stepperClass = 'complete';
+  stepperClassChange[3].stepperClass = 'active';
+  this.setState({searchItems : {...this.state.searchItems, brand : event.target.value}});
   sessionStorage.setItem('brand',event.target.value);
   } 
 
@@ -35,13 +53,20 @@ componentDidUpdate() {
 }
 
 issueHandler = (event) => {
-  this.setState({issue : event.target.value});
+  const stepperClassChange = [...this.state.stepper];
+
+  stepperClassChange[3].stepperClass = 'complete';
+  this.setState({searchItems : {...this.state.searchItems, issue : event.target.value}});
   sessionStorage.setItem('issue',event.target.value);
 
   } 
 
   issueButtonHandler = () => {
-    this.setState({issue : this.issueValue.value});
+
+    const stepperClassChange = [...this.state.stepper];
+    stepperClassChange[3].stepperClass = 'complete';
+
+    this.setState({searchItems : {...this.state.searchItems, issue : this.issueValue.value}});
     sessionStorage.setItem('issue',this.issueValue.value);
 
     } 
@@ -49,37 +74,48 @@ issueHandler = (event) => {
 
  
   deleteHandler = id => () => {
-    const searchData = {...this.state}; //copy the state
+    const stepperClassChange = [...this.state.stepper];
+    const searchData = {...this.state.searchItems}; //copy the state
+   
     const searchKeys = Object.keys(searchData); //get object keys
-    const searchToDelete = searchKeys[id]; //find the key we ar searching for from the id
+
+   for (var i = id ; i<searchKeys.length; i++) {
+    const searchToDelete = searchKeys[i]; //find the key we ar searching for from the id
 
     if (searchToDelete === 'locality') {
       this.props.history.replace('/');
     }
+    
+    stepperClassChange[(i)].stepperClass = 'disabled';
+   
     searchData[searchToDelete]= null; //set to null
-
-    this.setState(searchData); //setState to delete (rerender)
+  }
+  stepperClassChange[id].stepperClass = 'active';
+    this.setState({searchItems :  searchData}); //setState to delete (rerender)
   }
 
 searchHandler = () => {
-  const data = sessionStorage.getItem('locality')
+  const data = sessionStorage.getItem('locality');
+  this.setState({loader : true});
   axios.get('/shop/locality/'+data)
   .then(response => {
+    
     sessionStorage.setItem('shops', JSON.stringify(response.data));
     this.props.history.replace('/shops');
   })
   .catch( (error) => {
     // this.props.history.replace('/');  
-    this.setState({errorStatus : true});
+    this.setState({errorStatus : true, loader: false});
   });
-  console.log(data);
 }
 
 render() {
 let element =null;
 let history = null;
+let searchItemsState = this.state.searchItems;
 
-history = Object.values(this.state).map((data,id) => {
+
+history = Object.values(this.state.searchItems).map((data,id) => {
   if(data) { 
     return (
     
@@ -89,15 +125,17 @@ history = Object.values(this.state).map((data,id) => {
     )}
 })
 
-if ( this.state.category === null) {
+
+if (this.state.loader) { element = <Loader />}
+else if (this.state.searchItems.category === null) {
     element = (
         <div>
             <p className="lead">Τι θέλεις να επισκευάσεις;</p>                
                 {Category.map( Category => {return (<InputButton key={Category} choice={this.categoryHandler} value={Category}/>);})}
         </div>);
 } 
-else if (this.state.brand === null) {
-    const categoryName = this.state.category;
+else if (this.state.searchItems.brand === null) {
+    const categoryName = this.state.searchItems.category;
     let brandSearch = Brands[categoryName];
     if (brandSearch) { 
       element = (
@@ -116,8 +154,8 @@ else if (this.state.brand === null) {
         </div>
       </div>
       </div>) }
-} else if (this.state.issue === null) {
-  let issueSearch=Issues[this.state.category];
+} else if (this.state.searchItems.issue === null) {
+  let issueSearch=Issues[searchItemsState.category];
   if (issueSearch) {
     element = (
       <div>
@@ -148,41 +186,18 @@ let error = null;
        error = <div className="alert alert-warning" role="alert" >Ουπς! κάτι δεν πηγε καλά. </div>
     }
 
+let stepperElement = this.state.stepper.map( el => {return <Stepper key = {el.text} text = {el.text} stepperClasses= {el.stepperClass}/>})
 
 
 return(
-    
-        <div className="starter-template">
+
           <div className="container">
             <div className="card">
               <div className="card-body">
                 {/*************stepper *************/}
                 <div className="d-none d-sm-block">
                   <div className="row bs-wizard" >
-                  
-                    <div className="col-xs-3 col-md-3 col-s-3 col-l-3 col-xl-3 bs-wizard-step complete">
-                      <div className="text-center bs-wizard-stepnum">Περιοχή</div>
-                      <div className="progress"><div className="progress-bar"></div></div>
-                      <div className="bs-wizard-dot"></div>
-                    </div>
-                    
-                    <div className="col-xs-3 col-md-3 col-s-3 col-l-3 col-xl-3 bs-wizard-step complete">
-                      <div className="text-center bs-wizard-stepnum">Είδος</div>
-                      <div className="progress"><div className="progress-bar"></div></div>
-                      <div className="bs-wizard-dot"></div>
-                    </div>
-                    
-                    <div className="col-xs-3 col-md-3 col-s-3 col-l-3 col-xl-3 bs-wizard-step active">
-                      <div className="text-center bs-wizard-stepnum">Μάρκα</div>
-                      <div className="progress"><div className="progress-bar"></div></div>
-                      <div className="bs-wizard-dot"></div>
-                    </div>
-                    
-                    <div className="col-xs-3 col-md-3 col-s-3 col-l-3 col-xl-3 bs-wizard-step disabled">
-                      <div className="text-center bs-wizard-stepnum">Step 4</div>
-                      <div className="progress"><div className="progress-bar"></div></div>
-                      <div className="bs-wizard-dot"></div>
-                    </div>
+                    { stepperElement }
                   </div>
                 </div>
         
@@ -198,7 +213,6 @@ return(
             </div>
                 { error }
           </div>
-        </div>
 );
 }
 }

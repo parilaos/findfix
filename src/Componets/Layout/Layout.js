@@ -8,7 +8,9 @@ const layout = ( props ) => (
         <main> 
             { props.children }
         </main>
-        <footer></footer>
+        <footer>
+            <div style={{textAlign : 'center',color : '#fff'}}>2018 © made with ♥ by FindFix Team</div>
+        </footer>
     </Fragment>
 );
 
