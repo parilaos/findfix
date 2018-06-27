@@ -2,14 +2,56 @@ body {
   margin: 0;
   padding: 0;
   font-family: "Roboto", sans-serif;
-  color: #333;
+  color: #424242;
 }
 
-
+.navbar-brand {
+  font-size: 2.0rem !important;
+  color : #424242 !important;
+}
 main {
  padding-top : 20px;
  text-align: center;
  min-height: 100vh;
+}
+
+.photo {
+  min-height: 60vh;
+  background: url('../img/background1.png') no-repeat center;
+  /* -webkit-background-size: contain;
+  -moz-background-size: contain;
+  -o-background-size: contain; */
+  background-size: cover;
+  display: block;
+  padding: 40px;
+  margin-top: -20px;
+}
+
+
+#photo {
+ line-height: 60px;
+}
+
+.photo h4 {
+ 
+}
+
+.partner {
+ height: 400px;
+  background: url('../img/tech-guy.png') no-repeat center;
+  /* -webkit-background-size: contain;
+  -moz-background-size: contain;
+  -o-background-size: contain; */
+  background-size: cover;
+  display: block;
+  padding: 40px;
+  position: static;
+}
+
+.partner p { 
+  text-align: right;
+  vertical-align: bottom;
+  position: relative;
 }
 
 
@@ -21,6 +63,45 @@ main {
 footer {
     background: #262626;
     padding: 4rem 0 3rem;
+    margin-top: 60px;
+}
+
+
+.how {
+  min-height: 40vh;
+  display: block;
+}
+.how h5 {
+  line-height: 46px;
+}
+
+.divider {
+  width: 40px;
+  margin: 40px auto;
+  height: 2px;
+  background: #c471ed;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #f64f59, #c471ed, #12c2e9);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #f64f59, #c471ed, #12c2e9); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+}
+.how-title {
+  font-weight: 500;
+}
+
+/********buttons***********/
+
+.btn-findfix {
+  color: #fff;
+  background-image: none;
+  background: #c471ed;  
+  
+}
+
+.btn-findfix:hover {
+  background: #c471ed;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #f64f59, #c471ed, #12c2e9);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #f64f59, #c471ed, #12c2e9); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
 }
 
 /****chips***/
