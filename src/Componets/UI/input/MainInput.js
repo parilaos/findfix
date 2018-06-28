@@ -1,9 +1,10 @@
 import React from 'react';
+import MediaQuery from 'react-responsive';
 
 const mainInput = (props) => {
     return (
     <div>
-        {/* <div className="d-md-none">
+        <MediaQuery query="(max-device-width: 1224px)">
             <div className="form-group">
                 <input type="text" className="form-control" aria-label="Περιοχή ή Τ.Κ." aria-describedby="basic-addon2"
                 id={props.id}  
@@ -11,8 +12,8 @@ const mainInput = (props) => {
                 placeholder={props.placeholder} />
             </div>
                 <button className="btn btn-findfix btn-block" type="button">Επόμενο</button>
-        </div>
-        <div className="d-sm-none d-none d-md-block"> */}
+        </MediaQuery>
+        <MediaQuery query="(min-device-width: 1224px)">
             <div className="input-group">
                 <input type="text" className="form-control" aria-label="Περιοχή ή Τ.Κ." aria-describedby="basic-addon2"
                 id={props.id}  
@@ -22,7 +23,7 @@ const mainInput = (props) => {
                     <button className="btn btn-findfix" type="button">Επόμενο</button>
                 </div>
             </div>
-        {/* </div> */}
+        </MediaQuery>
     </div>
     );
 }

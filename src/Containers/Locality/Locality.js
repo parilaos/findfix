@@ -6,6 +6,7 @@ import Partner from '../../Componets/Marketing/Partner';
 import How from '../../Componets/Marketing/How';
 
 
+
 class Locality extends Component {
     state= {
            locality: ''
@@ -55,8 +56,11 @@ class Locality extends Component {
             });       
     };
 
+   
+
     render () {
-    
+     let x = window.innerWidth;
+     console.log(x);
      
         return (
             <div>

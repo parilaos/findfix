@@ -25,6 +25,8 @@ class Main extends Component {
       <Route path="/search" component = { Search } />
       <Route path="/shops" component = { Shops } />
       <Route path="/" exact component ={ Locality } />
+      <Route path='/partner' component={() => window.location = 'https://partner.findfix.gr'}/>
+
     </Fragment>
      );
  }
