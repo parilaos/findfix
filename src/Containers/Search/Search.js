@@ -115,15 +115,6 @@ let history = null;
 let searchItemsState = this.state.searchItems;
 
 
-history = Object.values(this.state.searchItems).map((data,id) => {
-  if(data) { 
-    return (
-    
-      <div key={id} className="col-xs-3 col-md-3 col-s-3 col-l-3 col-xl-3">
-        <History  value={data} delete={this.deleteHandler(id)}/>
-      </div>
-    )}
-})
 
 
 if (this.state.loader) { element = <Loader />}
@@ -186,26 +177,36 @@ let error = null;
        error = <div className="alert alert-warning" role="alert" >Ουπς! κάτι δεν πηγε καλά. </div>
     }
 
-let stepperElement = this.state.stepper.map( el => {return <Stepper key = {el.text} text = {el.text} stepperClasses= {el.stepperClass}/>})
+let stepperElement = this.state.stepper.map( (el, i) => {return <Stepper key = {i} text = {i + 1} stepperClasses= {el.stepperClass}/>})
 
+history = Object.values(this.state.searchItems).map((data,id) => {
+  if(data) { 
+    return (
+  
+        <History key={id} value={data} delete={this.deleteHandler(id)}/>
+    
+    )}
+})
 
 return(
 
           <div className="container">
-            <div className="card">
-              <div className="card-body">
-                {/*************stepper *************/}
-                <div className="d-none d-sm-block">
-                  <div className="row bs-wizard" >
-                    { stepperElement }
-                  </div>
-                </div>
-        
-                <div className="row">
+            <div className="row">
+              <div className="col-lg-6 col-md-6 col-s-12 col-xs-12">
+                <h6 style ={{textAlign : 'left'}}>Έχεις επιλέξει:</h6>
+                <div className="float-md-left">  
                   {history}
                 </div>
               </div>
+              <div className="col-lg-6 col-md-6 col-s-12 col-xs-12">
+                <div className="float-md-right">
+                {/*************stepper *************/}
+                    { stepperElement }
+                </div>
+              </div>
             </div>
+              
+
             <div className="card">
               <div className="card-body">
                 { element }

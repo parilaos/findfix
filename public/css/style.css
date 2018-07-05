@@ -120,6 +120,14 @@ footer {
 
 /****chips***/
 
+.chips {
+    display: inline-block;
+    line-height: 32px;  
+    margin: 0 5px 3px 0;
+    padding: 12px 0;
+    
+}
+
 
 .chip {
   display: inline-block;
@@ -129,15 +137,11 @@ footer {
   font-size: 13px;
   height: 32px;
   margin: 0 5px 3px 0;
+ 
 }
 
 
-.chips {
-    height: 32px;
-    line-height: 32px;  
-    margin: 0 5px 3px 0;
-    padding: 12px 0;
-}
+
 
 .chip-remove {
   display: inline-block;
@@ -174,17 +178,95 @@ footer {
 
 /****cards****/
 
-.card {
-  margin-top: 20px;
+.ff-card {
+margin-top: 20px;
+position: relative;
+display: -ms-flexbox;
+display: flex;
+-ms-flex-direction: column;
+flex-direction: column;
+min-width: 0;
+word-wrap: break-word;
+background-color: #fff;
+background-clip: border-box;
+border: 1px solid rgba(0,0,0,.125);
+border-radius: .25rem;
+text-align: left;
+}
+
+.ff-card-title {
+  color: #fff;
+  background-color: #8f8f8f;
+  padding: 0 6px;
+  height: 30px;
+  line-height: 30px;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.ff-card-text {
+  color: #8f8f8f;
+  padding: 0 6px;
+  font-size: 12px;
+  font-weight: 300;
 }
 
 
+.btn-service {
+  background-color: #c471ed;
+  color: #fff;
+  display: inline-block;
+    font-weight: 500;
+    font-size: 12px !important;
+    text-align: center;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border: 1px solid transparent;
+    padding: .375rem .75rem;
+    margin-right: -6px;
+    font-size: 1rem;
+    line-height: 1.5;
+    width: 90px;
+
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+
+
+/********rating*********/
+
+.stars-outer {
+  display: inline-block;
+  position: relative;
+  font-family: FontAwesome;
+}
+ 
+.stars-outer::before {
+  content: "\f006 \f006 \f006 \f006 \f006";
+}
+ 
+.stars-inner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 0;
+}
+ 
+.stars-inner::before {
+  content: "\f005 \f005 \f005 \f005 \f005";
+  color: #f8ce0b;
+}
 /****stepper****/
 
-.bs-wizard {margin-top: 40px;}
+/* .bs-wizard {margin-top: 40px;} */
 
 /*Form Wizard*/
-.bs-wizard {border-bottom: solid 1px #e0e0e0; padding: 0 0 10px 0;}
+/* .bs-wizard {border-bottom: solid 1px #e0e0e0; padding: 0 0 10px 0;}
 .bs-wizard > .bs-wizard-step {padding: 0; position: relative;}
 .bs-wizard > .bs-wizard-step + .bs-wizard-step {}
 .bs-wizard > .bs-wizard-step .bs-wizard-stepnum {color: #595959; font-size: 16px; margin-bottom: 5px;}
@@ -202,8 +284,29 @@ footer {
 .bs-wizard > .bs-wizard-step:first-child  > .progress {left: 50%; width: 50%;}
 .bs-wizard > .bs-wizard-step:last-child  > .progress {width: 50%;}
 .bs-wizard > .bs-wizard-step.disabled a.bs-wizard-dot{ pointer-events: none; }
-/*END Form Wizard*/
+END Form Wizard
+ */
 
+ .step {
+   border: 1px solid #12c2e9;
+   width: 48px;
+   height: 48px;
+   border-radius: 50%;
+   display: inline-block;
+   margin: 0.4em;
+   color: #12c2e9
+ }
+
+ .step.complete {
+   background-color: #12c2e9;
+   color: white;
+ }
+
+
+ .step-letter {
+   line-height: 48px;
+   font-size: 24px;
+ }
 
 
   
