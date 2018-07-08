@@ -241,11 +241,18 @@ text-align: left;
 .stars-outer {
   display: inline-block;
   position: relative;
-  font-family: FontAwesome;
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 16px;  /* Preferred icon size */
+  line-height: 14px;
+  margin: 0;
 }
  
 .stars-outer::before {
-  content: "\f006 \f006 \f006 \f006 \f006";
+  content: "\e83a \e83a \e83a \e83a \e83a";
+  color: #fff;
+
 }
  
 .stars-inner {
@@ -258,8 +265,8 @@ text-align: left;
 }
  
 .stars-inner::before {
-  content: "\f005 \f005 \f005 \f005 \f005";
-  color: #f8ce0b;
+  content: "\e838 \e838 \e838 \e838 \e838";
+  color: yellow;
 }
 /****stepper****/
 

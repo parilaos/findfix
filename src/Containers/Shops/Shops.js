@@ -13,13 +13,13 @@ class Shops extends Component {
         const data = JSON.parse(sessionStorage.getItem('shops')); //τα δεδομένα
         singleShopitem =  (Object.values(data).map((el,i) => {return (
             <div key={i}>
-                <Shop  name={el.shop_name} route={el.route} street_number={el.street_number} locality={el.locality} postal_code={el.postal_code}/>
+                <Shop rating={el.stars} name={el.shop_name} route={el.route} street_number={el.street_number} locality={el.locality} postal_code={el.postal_code}/>
             </div>)})); // μετατρεπω τα δεδομενα σε jsx array
     
 
         shopRowItem = (Object.values(data).map((el,i) => {return (
                 <div key={i} className="col-6">
-                    <Shop  name={el.shop_name} route={el.route} street_number={el.street_number} locality={el.locality} postal_code={el.postal_code}/></div>)})); // μετατρεπω τα δεδομενα σε jsx array
+                    <Shop rating={el.stars} name={el.shop_name} route={el.route} street_number={el.street_number} locality={el.locality} postal_code={el.postal_code}/></div>)})); // μετατρεπω τα δεδομενα σε jsx array
         for (var k = 0; k< data.length;k +=2) {
             shopRow.push(shopRowItem.slice(k,k+2));
         } //χωρίζω αυτό το array ανα 2       console.log(shopRow);
