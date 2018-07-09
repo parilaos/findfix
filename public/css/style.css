@@ -194,21 +194,17 @@ border-radius: .25rem;
 text-align: left;
 }
 
-.ff-card-title {
-  color: #fff;
-  background-color: #8f8f8f;
-  padding: 0 6px;
+.shop_title {
+  color: #424242;
   height: 30px;
   line-height: 30px;
-  font-size: 18px;
+  font-size:24px;
   font-weight: 500;
 }
 
-.ff-card-text {
-  color: #8f8f8f;
-  padding: 0 6px;
+.shop_address {
   font-size: 12px;
-  font-weight: 300;
+
 }
 
 
@@ -226,14 +222,25 @@ text-align: left;
     user-select: none;
     border: 1px solid transparent;
     padding: .375rem .75rem;
-    margin-right: -6px;
     font-size: 1rem;
     line-height: 1.5;
     width: 90px;
-
+    height: 100%;
+    border-radius: 2px;
     transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
 
+
+
+.shop_logo {
+  border-right :1px solid rgba(0,0,0,.125);
+  padding: 10px;
+  
+}
+
+.shop_info {
+  width: 70%;
+}
 
 
 /********rating*********/
@@ -251,7 +258,7 @@ text-align: left;
  
 .stars-outer::before {
   content: "\e83a \e83a \e83a \e83a \e83a";
-  color: #fff;
+  color: #424242;
 
 }
  
