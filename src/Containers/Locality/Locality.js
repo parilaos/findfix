@@ -68,7 +68,7 @@ class Locality extends Component {
                     <div className="container"> 
                         <h4 id="photo">Βρες τεχνικό για τον υπολογιστή ή το κινητό σου.</h4>
                         <div className="col-lg-6 offset-lg-3 col-md-8 offset-md-2  col-s-12 col-xs-12">   
-                            <MainInput changed={this.localityHandler}  placeholder="Βάλε την πόλη σου για να ξεκινήουμε" id='locality'/>
+                            <MainInput changed={this.localityHandler}  placeholder="Πόλη ή Τ.Κ." id='locality'/>
                         </div>
                     </div>
                 </div> 

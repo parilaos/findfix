@@ -92,6 +92,7 @@ issueHandler = (event) => {
   }
   stepperClassChange[id].stepperClass = 'active';
     this.setState({searchItems :  searchData}); //setState to delete (rerender)
+    this.setState({errorStatus : false});
   }
 
 searchHandler = () => {
@@ -141,7 +142,7 @@ else if (this.state.searchItems.brand === null) {
       <div className="input-group mb-3">
         <input type="text" className="form-control" placeholder="π.χ Apple..." value=""/>
         <div className="input-group-append">
-          <button className="btn btn-outline-secondary" type="button" onClick={this.brandHandler}>Επόμενο</button>
+          <button className="btn btn-outline-findfix" type="button" onClick={this.brandHandler}>Επόμενο</button>
         </div>
       </div>
       </div>) }
@@ -160,7 +161,7 @@ else if (this.state.searchItems.brand === null) {
         <div className="input-group mb-3">
           <input type="text" className="form-control" placeholder="π.χ. σπασμένη οθόνη" id="issues" ref= {el => this.issueValue = el} />
           <div className="input-group-append">
-            <button className="btn btn-outline-secondary" type="button" onClick={ (e) =>{ this.issueButtonHandler();}}>Επόμενο</button>
+            <button className="btn btn-outline-findfix" type="button" onClick={ (e) =>{ this.issueButtonHandler();}}>Επόμενο</button>
           </div>
         </div>
         </div>)}
@@ -168,13 +169,16 @@ else if (this.state.searchItems.brand === null) {
 
   element =(
   <div>
-    <input type="button" className="btn btn-outline-info btn-block" onClick={this.searchHandler} value="Αναζήτηση" />  
+    <input type="button" className="btn btn-outline-findfix btn-block" onClick={this.searchHandler} value="Αναζήτηση" />  
   </div>
 )}
 
 let error = null;
     if(this.state.errorStatus) {
        error = <div className="alert alert-warning" role="alert" >Ουπς! κάτι δεν πηγε καλά. </div>
+       setTimeout(() => {
+         this.setState({errorStatus : false});
+       }, 2000);
     }
 
 let stepperElement = this.state.stepper.map( (el, i) => {return <Stepper key = {i} text = {i + 1} stepperClasses= {el.stepperClass}/>})
@@ -213,6 +217,9 @@ return(
               </div>
             </div>
                 { error }
+            <div className="slogan">
+              <h4>Επισκεύασε γρήγορα και οικονομικά τον υπολογιστή ή το κινητό σου <br />σε έναν απο τους 1.500 συνεργαζόμενους τεχνικούς</h4>
+            </div>
           </div>
 );
 }

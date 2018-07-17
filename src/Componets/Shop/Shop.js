@@ -3,22 +3,6 @@ import Rating from '../UI/Rating/Rating';
 
 const shop = ( props ) => (
     <div className="ff-card">
-         {/* <div className="ff-card-body">
-            <div className="ff-card-title"> 
-                <div className="float-left">
-                   
-                </div>
-                <div className="clearfix float-right">
-                    
-                </div>
-            </div>
-            <div className="ff-card-text">
-                <div className="float-left">
-                    
-                </div>
-               
-            </div>
-        </div> */}
         <div className="d-flex flex-row">
             <div className="shop_logo">
                 <img src="../img/logo.png" alt="shop logo" height="80"/>
@@ -31,9 +15,18 @@ const shop = ( props ) => (
                 </div>  
             </div>
             <div>
-                <button className="btn-service">θέλω επισκευή</button>
+                <button className="btn-service"  data-toggle="collapse" data-target={"#collapse"+props.id} >θέλω επισκευή</button>
+            </div> 
+        </div>
+        <div className="collapse" id={"collapse"+props.id}>
+            <div className="card card-body">
+                <button type="button" className="btn btn-outline-primary btn-lg btn-block">Παραλαβή απο το χώρο μου</button>
+                <button type="button" className="btn btn-outline-primary btn-lg btn-block">Επισκευή στον χώρο μου</button>
+                <button type="button" className="btn btn-outline-primary btn-lg btn-block">Επίσκεψη στο κατάστημα</button>
+                <div class="d-flex justify-content-end" style={{marginTop : "20px"}}>Περισσότερες πληροφορίες...</div>
             </div>
         </div>
+       
     </div>
 );
 
